@@ -53,7 +53,7 @@ public class Controller
         System.out.println ("\nOla! Seja Bem-vindo ao registo na aplicação JavaFatura");
         System.out.println ("Por favor insira um nif: (9 digitos)");
         
-        while(!(Integer.toString(nif).matches("[0-9]{6}")) || model.containsCliente(nif)) {
+        while(!(Integer.toString(nif).matches("[0-9]{9}")) || model.containsCliente(nif)) {
     			if(!(model.containsCliente(nif)))
     					System.out.print("Por favor insira o seu nif: ");
     			else
