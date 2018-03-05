@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -9,27 +10,28 @@ public class Cliente extends Contribuintes implements Serializable
     private int numeroAgregados;
     private int numeroFiscais;
     private double coeficiente;
-    private int codigo;
+   
     
-    public List<Fatura> minhasFaturas;
+    public List<Fatura> fatCliente;
+    public List<Fatura> fatClientePend;
     
     public Cliente(){
        super("",0,"","","");
        this.numeroAgregados=0;
        this.numeroFiscais=0;
        this.coeficiente=0.0;
-       this.codigo=0;
-       this.minhasFaturas = new ArrayList<Fatura>();
+       this.fatCliente = new ArrayList<Fatura>();
+       this.fatClientePend = new ArrayList<Fatura>();
         
     }
     
-    public Cliente( String nome, int nif, String email, String morada,String password,int numeroAgregados, int numeroFiscais, double coeficiente, int codigo){
+    public Cliente( String nome, int nif, String email, String morada,String password,int numeroAgregados, int numeroFiscais, double coeficiente){
          super(nome, nif, email, morada, password);
          this.numeroAgregados=numeroAgregados;
          this.numeroFiscais=numeroFiscais;
          this.coeficiente=coeficiente;
-         this.codigo=codigo;
-         this.minhasFaturas=new ArrayList<Fatura>();
+         this.fatCliente=new ArrayList<Fatura>();
+         this.fatClientePend= new ArrayList<Fatura>();
     }
     
     public Cliente(Cliente cliente){
@@ -37,8 +39,8 @@ public class Cliente extends Contribuintes implements Serializable
         this.numeroAgregados=cliente.getNumeroAgregados();
         this.numeroFiscais=cliente.getNumeroFiscais();
         this.coeficiente=cliente.getCoeficiente();
-        this.codigo=cliente.getCodigo();
-        this.minhasFaturas=cliente.getFaturas();
+        this.fatCliente=cliente.getFaturaCliente();
+        this.fatClientePend=cliente.getFaturaClientePend();
         
     }
     
@@ -50,16 +52,18 @@ public class Cliente extends Contribuintes implements Serializable
         return numeroFiscais;
         
     }
-    public List<Fatura> getFaturas(){
-        return this.minhasFaturas.stream()
+    public List<Fatura> getFaturaCliente(){
+        return this.fatCliente.stream()
+                            .collect(Collectors.toList());
+    }
+    public List<Fatura> getFaturaClientePend(){
+        return this.fatClientePend.stream()
                             .collect(Collectors.toList());
     }
     public double getCoeficiente(){
      return coeficiente;   
     }
-    public int getCodigo(){
-        return codigo;
-    }
+    
     
     /**Setters*/
     public void setNumeroAgregados(int numeroAgregados){
@@ -71,10 +75,6 @@ public class Cliente extends Contribuintes implements Serializable
     public void setCoeficiente(double coeficiente){
       this.coeficiente=coeficiente;
     }
-    public void setCodigo(int codigo){
-      this.codigo=codigo;
-    }
-    
     
     // Método equals - recebe Object como parametro 
     public boolean equals(Object obj) {
@@ -87,4 +87,73 @@ public class Cliente extends Contribuintes implements Serializable
     public Cliente clone() { 
         return new Cliente(this);
     }
+    
+    public String toStringCliente(){
+        StringBuilder s = new StringBuilder();
+	        s.append("Nome: " + super.getNome() + "\n");
+	        s.append("NIF: " + super.getNif() + "\n");
+	        s.append("Email: " + super.getEmail() + "\n");
+	        s.append("Morada: " + super.getMorada() + "\n");
+            
+        return s.toString(); 
+    }
+    
+    
+
+    /**
+     * ################ FATURAS ###############
+     */
+    
+  //Confirmar se é assim que se faz
+  		//Vai ao array fatClientes e devolve todas as faturas que estão lá dentro
+  		public ArrayList<Fatura> getFaturasCliente(){
+  		    ArrayList<Fatura> f = new ArrayList<Fatura>();
+  		    
+  		    Iterator<Fatura> it = fatCliente.iterator();
+  		    while(it.hasNext()){
+  		        //Confirmar o que meter para ir buscar o fatCliente
+  		    		Fatura faturas = it.next();
+  		        f.add(faturas);
+  		    }
+  		    
+  		    return f;
+  		  }
+  		
+  		public void setFaturasCliente(ArrayList<Fatura> fatCliente) {
+  		  	this.fatCliente=fatCliente;
+  		}
+  		
+  		public ArrayList<Fatura> getFaturasClientePend(){
+  		    ArrayList<Fatura> f = new ArrayList<Fatura>();
+  		    
+  		    Iterator<Fatura> it = fatClientePend.iterator();
+  		    while(it.hasNext()){
+  		        Fatura fatura = it.next();
+  		        f.add(fatura);
+  		    }
+  		    
+  		    return f;
+  		  }
+  		
+  		public void setFaturasClientePend(ArrayList<Fatura> fatClientePend) {
+  		  	this.fatClientePend=fatClientePend;
+  		}
+    
+  		/**
+         * Registar uma Fatura
+         */
+        public boolean verificaFatura(Fatura novaFatura){
+              if(!fatCliente.contains(novaFatura)) {
+              	System.out.println("nova Fatura: "+novaFatura);
+                  this.fatCliente.add(novaFatura);
+              }
+              else return false;
+              
+              return false;
+        }
+        
+        
+        
+        
+        
 }

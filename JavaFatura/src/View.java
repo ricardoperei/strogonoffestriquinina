@@ -11,15 +11,11 @@ public class View
 	    	   
 	    	 input = new Scanner (System.in);
 	    	 
-        	 Model empresas;
-    	 	 Model clientes;
+        	 Model model;
     	 	 
     	 	 //Inicializa as listas de clientes e empresas
-    	 	 clientes = new Model();//Controlo.openC();
-    	 	 clientes.setClientes(Controller.lerC());
+    	 	 model = new Model(Controller.carregaModel());
     	 	 
-	     empresas = new Model();//Controlo.openE();
-	     empresas.setEmpresas(Controller.lerE());
     	 	 /**
 	     //Registar empresa 
     	 	 
@@ -41,12 +37,12 @@ public class View
 	             switch(caso) {
 	                 case 0: { 
 	                     System.out.println ("Ate à proxima."); 
-	                     Controller.guardaE(empresas.getEmpresas());
-	                     Controller.guardaC(clientes.getClientes());
+	                     Controller.guardaModel(model);
+	                     
 	                     break;
 	                 }
 	                 
-	               //Menu logIn Empresa
+	               //Menu logIn Cliente
 	                 case 1: {
 
 			         
@@ -62,7 +58,7 @@ public class View
 			             	//Sai do menu de logIn cliente para o principal 
 			             	case 0: { 
 			                     System.out.println ("Ate à proxima."); 
-			                     Controller.guardaC(clientes.getClientes());
+			                     Controller.guardaModel(model);
 			                     break;
 			                 }
 			                 
@@ -84,15 +80,13 @@ public class View
 			                     System.out.println("Regista novo cliente");
 			                     
 			                     //iguala esse objeto ao do array clientes que está na classe Admin
-			                     cliente = Controller.logInCliente(nif,password,clientes);
-			                     System.out.println("Iguala novo cliente");
-			                     
+			                     cliente = Controller.logInCliente(nif,password,model);
 			                     if(cliente==null) {
 			                         System.out.println ("Cliente não existe ou nif/palavra-passe incorretos. Tente outra vez");
 			                     }
 			                     else
 			                     {
-			                         loginC(nif,clientes);
+			                         loginC(nif,model);
 			                         caso=-1;
 			                     }
 			                     break;
@@ -100,7 +94,7 @@ public class View
 			                 
 			                 // Registar um novo utilizador 
 			                 case 2: {
-			                     Controller.RegistarCliente(clientes);
+			                     Controller.RegistarCliente(model);
 			                     break;
 			                 }    
 			             }
@@ -123,7 +117,7 @@ public class View
 			             	//Sai do menu de logIn empresa para o principal 
 			             	case 0: { 
 			                     System.out.println ("Ate à proxima."); 
-			                     Controller.guardaE(empresas.getEmpresas());
+			                     Controller.guardaModel(model);
 			                     break;
 			                 }
 			                 
@@ -139,14 +133,14 @@ public class View
 			                     System.out.print("Insira a Palavra-Passe: ");
 			                     password = input.next();
 			                     
-			                     empresa = Controller.logInEmpresa(nif,password,empresas);
+			                     empresa = Controller.logInEmpresa(nif,password,model);
 			                     
 			                     if(empresa==null) {
 			                         System.out.println ("Empresa não existe ou nif/palavra-passe incorretos. Tente outra vez");
 			                     }
 			                     else
 			                     {
-			                         loginE(nif,empresas);
+			                         loginE(nif,model);
 			                         caso=-1;
 			                     }
 			                     break;
@@ -154,7 +148,7 @@ public class View
 			                 
 			                 // Registar um novo utilizador 
 			                 case 2: {
-			                     Controller.RegistarEmpresa(empresas);
+			                     Controller.RegistarEmpresa(model);
 			                     break;
 			                 }    
 			             }
@@ -168,28 +162,30 @@ public class View
 	     
 	                 
 	  // Menu logIn da empresa
-	     public static void loginE(int nif, Model empresas) throws IOException {
+	     public static void loginE(int nif, Model model) throws IOException {
 	         
 	    	 	input2 = new Scanner (System.in);
 	    	 	int caso = -1;
 	         System.out.print('\f');
-	         Empresa empresa = empresas.getEmpresa(nif);
+	         Empresa empresa = model.getEmpresa(nif);
 	                 /* Login*/
 	         		while(caso!=0) {
 	                System.out.println ("\nBem Vindo "+ empresa.getNome() +"!\n");
 	                Menus.menuEmpresa();
 	                caso = input2.nextInt();
-	     
+	                
+	                
+	                
 	             }
 	     }
 	     
 	  // Menu logIn do cliente
-	     public static void loginC(int nif, Model clientes) throws IOException {
+	     public static void loginC(int nif, Model model) throws IOException {
 	         
 	    	 	input3 = new Scanner (System.in);
 	    	 	int caso = -1;
 	         System.out.print('\f');
-	         Cliente cliente = clientes.getCliente(nif);
+	         Cliente cliente = model.getCliente(nif);
 	                 /* Login*/
 	         		while(caso!=0) {
 	                System.out.println ("\nBem Vindo "+ cliente.getNome() +"!\n");

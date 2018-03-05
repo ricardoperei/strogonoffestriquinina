@@ -27,6 +27,7 @@ public class Fatura
         this.numFiscalCli=numFiscalCli;
         this.descricao=descricao;
         this.natureza=natureza;
+        this.valor=valor;
     }
     public Fatura(Fatura factura){
      this.numFiscalEmp=factura.getNumFiscalEmp();
@@ -35,6 +36,7 @@ public class Fatura
      this.numFiscalCli=factura.getNumFiscalCli();
      this.descricao=factura.getDescricao();
      this.natureza=factura.getNatureza();
+     this.valor=factura.getValor();
      
     }
     
@@ -61,4 +63,32 @@ public class Fatura
     public String getNatureza(){
         return natureza;
     }
+    
+    public double getValor(){
+        return valor;
+    }
+    
+    public void setNumFiscalEmp(int numFiscalEmp){
+        this.numFiscalEmp=numFiscalEmp;
+      }
+    
+    public void setDesignacao(String designacao){
+        this.designacao=designacao;
+      }
+    
+    public void setData(LocalDate data){
+        this.data=data;
+      }
+    
+    public void setNumFiscalCli(int numFiscalCli){
+        this.numFiscalCli=numFiscalCli;
+      }
+    
+    public void setNatureza(String natureza){
+        this.natureza=natureza;
+      }
+    
+    public void setValor(double valor){
+        this.valor=valor;
+      }
 }

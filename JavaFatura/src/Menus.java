@@ -49,9 +49,8 @@ public class Menus {
 		System.out.println("0 - Voltar atrás");
 
 	}
-	protected static void menuCliente2() {
-		System.out.println("Associar fatura a setor de atividade");
-		System.out.println("Qual o setor da fatura:");
+	protected static void menuTipoAtividade() {
+		System.out.println("Qual o setor de Atividade:");
 		System.out.println("1 - Saude");
 		System.out.println("2 - Alimentação");
 		System.out.println("3 - Restauração");
@@ -61,7 +60,6 @@ public class Menus {
 		System.out.println("7 - Transportes");
 		System.out.println("8 - Outros");
 		
-		System.out.println("0 - Voltar atrás");
 
 	}
 	protected static void menuCliente3() {
@@ -100,11 +98,11 @@ public class Menus {
 	
 	}
 	
-	protected static void menuEmpresa1() {
+	protected static void menuEmpresaAltDados() {
 		System.out.println("Qual a informação que quer alterar");
-		System.out.println("1 - Nome");
-		System.out.println("2 - Morada");
-		System.out.println("VER NO ENUNCIADO QUAL A INFORMAÇÃO DE CADA ENTIDADE");
+		System.out.println("1 - Email");
+		System.out.println("2 - Password");
+		System.out.println("3 - Morada");
 		System.out.println("0 - Voltar atrás");
 
 	}

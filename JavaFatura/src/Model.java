@@ -1,7 +1,7 @@
  import java.util.*;
  import java.io.Serializable;
 
-public class Model 
+public class Model implements Serializable
 {
      
       private HashMap<Integer,Empresa> empresas;
@@ -67,9 +67,11 @@ public class Model
        * Registar uma nova Empresa
        */
       public boolean registarEmpresa(Empresa novaEmpresa){
-            if(!this.empresas.containsKey(novaEmpresa.getNif()))
+            if(!this.empresas.containsKey(novaEmpresa.getNif()) && !this.clientes.containsKey(novaEmpresa.getNif())) {
+            		System.out.println("novaEmpresa: "+novaEmpresa);
                 this.empresas.put(novaEmpresa.getNif(),novaEmpresa);
-            else return false;
+            }
+                else return false;
             
             return false;
       }
@@ -78,7 +80,7 @@ public class Model
        * Registar um novo Cliente
        */
       public boolean registarCliente(Cliente novoCliente){
-            if(!this.clientes.containsKey(novoCliente.getNif())) {
+            if(!this.clientes.containsKey(novoCliente.getNif()) && !this.empresas.containsKey(novoCliente.getNif())) {
             	System.out.println("novoCliente: "+novoCliente);
                 this.clientes.put(novoCliente.getNif(),novoCliente);
             }
@@ -125,7 +127,14 @@ public class Model
        * Verifica se contem a empresa
        */
       public boolean containsEmpresa(int nif){
+    	  if(!(empresas==null)) 
         return this.empresas.containsKey(nif);
+    	  else
+    	  {
+    		  this.empresas=new HashMap<Integer,Empresa>();
+    		  return true;
+    	  }
+    		  
       }
       
 
@@ -133,10 +142,8 @@ public class Model
        * Verifica se contem o cliente
        */
       public boolean containsCliente(int nif){
-    	  if(!(clientes==null)) {
-    	  System.out.println("contains" +clientes);
+    	  if(!(clientes==null)) 
         return this.clientes.containsKey(nif);
-    	  }
     	  else
     	  {
     		  this.clientes=new HashMap<Integer,Cliente>();
@@ -144,5 +151,53 @@ public class Model
     	  }
     		  
       }
+      
+      
+      //############# Fatugas ##############
+      
+      public static int RegistarFatura (Model model, Empresa empresa) {
+          int numFiscalEmp=0, numFiscalCli=0;
+          String designacao="", descricao="",natureza="";
+          int data=00/00/0000;
+          double valor=0.0;
+              Scanner input = new Scanner(System.in);
+              
+              System.out.println ("\nOla! Emitir nova Fatura");
+              
+              numFiscalEmp=empresa.getNif();
+              
+              while(!(Integer.toString(numFiscalCli).matches("[0-9]{9}")) || model.containsCliente(numFiscalCli)) {
+      			if(!(model.containsCliente(numFiscalCli)))
+      					System.out.print("NIF inválido, tente novamente");
+      			else
+      				System.out.println("NIF ja existente. Por favor insira um novo nif:");
+      			numFiscalCli = input.nextInt();
+              }
+              
+              
+              while(!(designacao.matches("[a-zA-z]+"))) {
+              		System.out.print("Por favor insira o seu nome: ");
+              		designacao = input.next();
+              }
+              
+              while(!(descricao.matches("[a-zA-Z]+"))) {
+              		System.out.print("Por favor insira a sua morada: ");
+              		descricao = input.next();
+              }
+              while(!(designacao.matches("[a-zA-z]+"))) {
+          		System.out.print("Por favor insira o seu nome: ");
+          		designacao = input.next();
+              }
+              
+              System.out.print("Por favor insira o valor ");
+              valor = input.nextDouble();
+
+                  
+              Fatura nova = new Fatura ();
+              
+              return 0;
+          }
+
+          
       
 }

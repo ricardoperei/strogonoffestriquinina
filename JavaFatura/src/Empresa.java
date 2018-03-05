@@ -53,10 +53,13 @@ public class Empresa extends Contribuintes implements Serializable
 	    }
   
   /**Converte para uma representação textual*/
-  public String toStringparaUtilizador(){
+  public String toStringEmpresa(){
         StringBuilder s = new StringBuilder();
-            s.append("Setor de Atividade: "+ tipoAtividade + "\n");
-            s.append("Dedução Fiscal: " + deducaoFiscal +" \n");
+	        s.append("Nome: " + super.getNome() + "\n");
+	        s.append("NIF: " + super.getNif() + "\n");
+	        s.append("Email: " + super.getEmail() + "\n");
+	        s.append("Morada: " + super.getMorada() + "\n");
+	        	s.append("Setor de Atividade: "+ tipoAtividade + "\n");
             
         return s.toString(); 
     }
