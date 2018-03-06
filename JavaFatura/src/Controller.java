@@ -9,26 +9,41 @@ public class Controller
 	
 	
     public static int RegistarEmpresa (Model model) {
-        String nome,email,morada,password, tipoAtividade="";
-        int nif;
+        String nome="",email="",morada="",password="", tipoAtividade="";
+        int nif=0;
         double deducaoFiscal=0.0;
         
         System.out.println ("\nOla! Seja Bem-vindo ao registo na aplicação JavaFatura");
-        System.out.print ("Por favor insira um nif:");
-        nif= input.nextInt();
-        //verifica se um nif ja existe
-        while(model.containsEmpresa(nif)){
-            System.out.println("NIF ja existente. Por favor insira um novo nif:");
-            nif= input.nextInt();
+        System.out.println ("Por favor insira um nif: (9 digitos)");
+        
+        while(!(Integer.toString(nif).matches("[0-9]{9}")) || model.containsCliente(nif)) {
+    			if(!(model.containsCliente(nif)))
+    					System.out.print("Por favor insira o seu nif: ");
+    			else
+    				System.out.println("NIF ja existente. Por favor insira um novo nif:");
+    			nif = input.nextInt();
         }
-        System.out.print("Por favor insira a sua password: ");
-        password = input.next();
-        System.out.print("Por favor insira o seu nome: ");
-        nome = input.next();
-        System.out.print("Por favor insira o seu email: ");
-        email = input.next();
-        System.out.print("Por favor insira a sua morada: ");
-        morada = input.next();
+        
+        while(!(password.matches("[a-zA-Z0-9]*[A-Z]+[a-zA-Z0-9]*")) || !(password.matches("[a-zA-Z0-9]*[0-9]+[a-zA-Z0-9]*")) || !(password.matches("[a-zA-Z0-9]*[a-z]+[a-zA-Z0-9]*")) || !(password.matches("[a-zA-Z0-9]{6,}"))) {
+        		System.out.print("Por favor insira a sua password: ");
+        		password = input.next();
+        }
+        
+        while(!(nome.matches("[a-zA-z]+"))) {
+        		System.out.print("Por favor insira o seu nome: ");
+        		nome = input.next();
+        }
+        
+        while(!(email.matches("[a-z0-9._-]+@[a-z]+.[a-z]+"))) {
+        		System.out.print("Por favor insira o seu email: ");
+            email = input.next();
+        }
+        
+        while(!(morada.matches("[a-zA-Z]+"))) {
+        		System.out.print("Por favor insira a sua morada: ");
+        		morada = input.next();
+        }
+        
         
         System.out.print("Por favor insira o tipo da sua atividade: ");
         Menus.menuTipoAtividade();
@@ -80,15 +95,15 @@ public class Controller
     
     public static int RegistarCliente (Model model) {
         String nome="",email="",morada="",password="";
-        int nif=0, numeroAgregados=0, numeroFiscais=0, coeficiente=0;
-        Scanner input = new Scanner(System.in);
+        int nif=0, numAgregado=0, x=0, coeficiente=0;
+        ArrayList<Integer> nifAgregado = new ArrayList<Integer>();
+        
         
         System.out.println ("\nOla! Seja Bem-vindo ao registo na aplicação JavaFatura");
-        System.out.println ("Por favor insira um nif: (9 digitos)");
         
         while(!(Integer.toString(nif).matches("[0-9]{9}")) || model.containsCliente(nif)) {
     			if(!(model.containsCliente(nif)))
-    					System.out.print("Por favor insira o seu nif: ");
+    					System.out.print("Por favor insira o seu nif (9 digitos):");
     			else
     				System.out.println("NIF ja existente. Por favor insira um novo nif:");
     			nif = input.nextInt();
@@ -114,18 +129,27 @@ public class Controller
         		morada = input.next();
         }
         
-        System.out.print("Por favor insira o numero de pessoas do Agregado Familiar: ");
-        numeroAgregados = input.nextInt();
-        System.out.print("Por favor insira o numero Fiscais: ");
-        numeroFiscais = input.nextInt();
+        System.out.println("Quantas pessoas tem no seu agregado familiar?");
+		numAgregado =input.nextInt();
+		
+		System.out.println("Insira o nif das "+numAgregado+" pessoas do seu Agregado!");
+		for(int i=0;i<numAgregado;i++) {
+			System.out.print(+(i+1)+"º NIF: ");
+			x=input.nextInt();
+			 while(!(Integer.toString(x).matches("[0-9]{9}"))) {
+	        		System.out.println("NIF inválido, por favor insira novamente!!");
+	        		x = input.nextInt();
+	        }
+			 nifAgregado.add(x);
+		}
         
         System.out.println("Por favor insira qual o seu coeficiente: ");
         System.out.println("1 - Escalão A");
-        System.out.println("2 - Escalão A");
-        System.out.println("3 - Escalão A");
+        System.out.println("2 - Escalão B");
+        System.out.println("3 - Escalão C");
         coeficiente = input.nextInt();
             
-        Cliente novo = new Cliente (nome, nif, email, morada, password, numeroAgregados, numeroFiscais, coeficiente);
+        Cliente novo = new Cliente (nome, nif, email, morada, password, numAgregado, nifAgregado, coeficiente);
         
         if(model.registarCliente(novo)) 
             System.out.println("\nBem-Vindo a JavaFatura!! faça já o seu Log-in para aceder ao seu perfil.");
@@ -165,48 +189,7 @@ public class Controller
 	    	return model;
     }
     
-    //Seleciona o tipo de atividade e automaticamente a dedução fiscal
-	@SuppressWarnings("unused")
-	public static void selectTipoAtividade(int opcao) {
-		double deducaoFiscal=0;
-		String tipoAtividade="";
-		
-		if(opcao==1) {
-			deducaoFiscal=0.06;
-			tipoAtividade="Saude";
-		}
-		if(opcao==2) {
-			deducaoFiscal=0.06;
-			tipoAtividade="Alimentacao";
-		}
-		if(opcao==3) {
-			deducaoFiscal=0.13;
-			tipoAtividade="Restauracao";
-		}
-		if(opcao==4) {
-			deducaoFiscal=0.06;
-			tipoAtividade="Educacao";
-		}
-		if(opcao==5) {
-			deducaoFiscal=0.13;
-			tipoAtividade="Hotelaria";
-		}
-		if(opcao==6) {
-			deducaoFiscal=0.06;
-			tipoAtividade="Bens-essenciais";
-		}
-		if(opcao==7) {
-			deducaoFiscal=0.13;
-			tipoAtividade="Transportes";
-		}
-		if(opcao==8) {
-			deducaoFiscal=0.23;
-			tipoAtividade="Outros";
-		}
-		
-	}
-	
-	   
+    
 	/**
 	 * Log In Empresa
 	 */
@@ -331,7 +314,6 @@ public class Controller
 	
     public static void altDadosEmpresa(Empresa empresa) {
             Menus.menuEmpresaAltDados();
-            Scanner input = new Scanner(System.in);
             int caso=1;
             
                 caso = input.nextInt();
@@ -438,7 +420,33 @@ public class Controller
                     cliente.setMorada(x);
                     System.out.println("A sua morada foi alterada com sucesso");
                     break;
+                 
+                case 4:
+                		System.out.println("Insira o numero de pessoas pertencentes ao seu Agregado Familiar");
+                		int n =input.nextInt();
+                		cliente.setNumAgregado(n);
+		            	cliente.nifAgregado.clear();	
+                			System.out.println("Insira o nif das "+n+" pessoas do seu Agregado!");
+		            		for(int i=0;i<n;i++) {
+		            			System.out.print(+(i+1)+"º NIF: ");
+		            			int n1=input.nextInt();
+			            			 while(!(Integer.toString(n1).matches("[0-9]{9}"))) {
+			            	        		System.out.println("NIF inválido, por favor insira novamente!!");
+			            	        		n1 = input.nextInt();
+			            	         }
+		            			 cliente.nifAgregado.add(n1);
+		            		}
+		            		break;
                     
+                case 5:
+					System.out.println("Por favor insira qual o seu coeficiente: ");
+					System.out.println("1 - Escalão A");
+					System.out.println("2 - Escalão B");
+					System.out.println("3 - Escalão C");
+					n = input.nextInt();
+					cliente.setCoeficiente(n);
+					break;
+                
                 case 0:
                 		menuPrincipalCliente(cliente);
                 		break;

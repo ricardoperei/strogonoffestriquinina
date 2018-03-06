@@ -34,10 +34,9 @@ public class Menus {
 		
 		System.out.println("1 - Editar perfil"); //Não será possivel editar NIF
 		System.out.println("2 - Faturas por validar");
-		System.out.println("3 - Editar Agregado");
-		System.out.println("4 - Consultar faturas");
-		System.out.println("5 - Cálculo Deduções");
-		System.out.println("6 - Ver perfil"); // consta toda a informação pessoal mais o agregado familiar se tiver
+		System.out.println("3 - Consultar faturas");
+		System.out.println("4 - Cálculo Deduções");
+		System.out.println("5 - Ver perfil"); // consta toda a informação pessoal mais o agregado familiar se tiver
 		System.out.println("\n0 - Sair");
 	
 	}

@@ -7,8 +7,8 @@ public class Cliente extends Contribuintes implements Serializable
 {
     
 	//variaveis de instancia
-    private int numeroAgregados;
-    private int numeroFiscais;
+    private int numAgregado;
+    public List<Integer> nifAgregado;
     private int coeficiente;
    
     
@@ -17,27 +17,27 @@ public class Cliente extends Contribuintes implements Serializable
     
     public Cliente(){
        super("",0,"","","");
-       this.numeroAgregados=0;
-       this.numeroFiscais=0;
+       this.numAgregado=0;
        this.coeficiente=0;
+       this.nifAgregado = new ArrayList<Integer>();
        this.fatCliente = new ArrayList<Fatura>();
        this.fatClientePend = new ArrayList<Fatura>();
         
     }
     
-    public Cliente( String nome, int nif, String email, String morada,String password,int numeroAgregados, int numeroFiscais, int coeficiente){
+    public Cliente( String nome, int nif, String email, String morada,String password, int numAgregado, ArrayList<Integer> nifAgregado, int coeficiente){
          super(nome, nif, email, morada, password);
-         this.numeroAgregados=numeroAgregados;
-         this.numeroFiscais=numeroFiscais;
+         this.numAgregado=numAgregado;
          this.coeficiente=coeficiente;
+         this.nifAgregado = new ArrayList<Integer>();
          this.fatCliente=new ArrayList<Fatura>();
          this.fatClientePend= new ArrayList<Fatura>();
     }
     
     public Cliente(Cliente cliente){
     		super(cliente.getNome(), cliente.getNif(), cliente.getEmail(), cliente.getMorada(), cliente.getPassword());
-        this.numeroAgregados=cliente.getNumeroAgregados();
-        this.numeroFiscais=cliente.getNumeroFiscais();
+        this.numAgregado=cliente.getNumAgregado();
+        this.nifAgregado=cliente.getNifAgregado();
         this.coeficiente=cliente.getCoeficiente();
         this.fatCliente=cliente.getFaturaCliente();
         this.fatClientePend=cliente.getFaturaClientePend();
@@ -45,12 +45,12 @@ public class Cliente extends Contribuintes implements Serializable
     }
     
     /**Getters*/
-    public int getNumeroAgregados(){
-        return numeroAgregados;
+    public int getNumAgregado(){
+        return numAgregado;
     }
-    public int getNumeroFiscais(){
-        return numeroFiscais;
-        
+    public List<Integer> getNifAgregado(){
+        return this.nifAgregado.stream()
+                            .collect(Collectors.toList());
     }
     public List<Fatura> getFaturaCliente(){
         return this.fatCliente.stream()
@@ -66,11 +66,11 @@ public class Cliente extends Contribuintes implements Serializable
     
     
     /**Setters*/
-    public void setNumeroAgregados(int numeroAgregados){
-      this.numeroAgregados=numeroAgregados;
+    public void setNumAgregado(int numAgregado){
+      this.numAgregado=numAgregado;
     }
-    public void setNumeroFiscais(int numeroFiscais){
-      this.numeroFiscais=numeroFiscais;
+    public void setNifAgregado(ArrayList<Integer> nifAgregado){
+      this.nifAgregado=nifAgregado;
     }
     public void setCoeficiente(int coeficiente){
       this.coeficiente=coeficiente;
@@ -94,7 +94,7 @@ public class Cliente extends Contribuintes implements Serializable
 	        s.append("NIF: " + super.getNif() + "\n");
 	        s.append("Email: " + super.getEmail() + "\n");
 	        s.append("Morada: " + super.getMorada() + "\n");
-	        s.append("Numero de pessoas do Agregado Familiar: " + numeroAgregados + "\n");
+	        s.append("Numero de pessoas do Agregado Familiar: " + numAgregado + "\n");
 	        s.append("Coeficiente: " + coeficiente + "\n");
             
         return s.toString(); 

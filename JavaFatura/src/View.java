@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class View
 	 {
 	    private static Scanner input;
-		private static Scanner input2;
-		private static Scanner input3;
+		
 
 		public static void main(String[] args) throws IOException, ClassNotFoundException {
 	    	   
@@ -49,7 +48,7 @@ public class View
 	  // Menu logIn da empresa
 	     public static void loginE(int nif, Model model) throws IOException {
 	         
-	    	 	input2 = new Scanner (System.in);
+	    	 	input = new Scanner (System.in);
 	    	 	int caso = -1;
 	         System.out.print('\f');
 	         Empresa empresa = model.getEmpresa(nif);
@@ -63,7 +62,7 @@ public class View
 	  // Menu logIn do cliente
 	     public static void loginC(int nif, Model model) throws IOException {
 	         
-	    	 	input3 = new Scanner (System.in);
+	    	 	input = new Scanner (System.in);
 	    	 	int caso = -1;
 	         System.out.print('\f');
 	         Cliente cliente = model.getCliente(nif);
