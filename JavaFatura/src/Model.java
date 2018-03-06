@@ -17,6 +17,7 @@ public class Model implements Serializable
         this.clientes = a.getClientes();
       }
       
+      // lista com todas as empresas
       public HashMap<Integer,Empresa> getEmpresas(){
         HashMap<Integer,Empresa> e = new HashMap<Integer,Empresa>();
         
@@ -25,10 +26,10 @@ public class Model implements Serializable
             HashMap.Entry<Integer,Empresa> entry = itE.next();
             e.put(entry.getKey(),entry.getValue().clone());
         }
-        
         return e;
       }
       
+      // lista com todos os clientes
       public HashMap<Integer,Cliente> getClientes(){
         HashMap<Integer,Cliente> c = new HashMap<Integer,Cliente>();
         
@@ -37,9 +38,9 @@ public class Model implements Serializable
             HashMap.Entry<Integer,Cliente> entry = itC.next();
             c.put(entry.getKey(),entry.getValue().clone());
         }
-        
         return c;
       }
+      
       
       public void setClientes(HashMap<Integer,Cliente> clientes) {
     	  	this.clientes=clientes;
@@ -50,60 +51,45 @@ public class Model implements Serializable
     }
       
       /**
-       * Dado o endereço de utilizador retorna a empresa se existir
+       * Dado o nif retorna a empresa se existir
        */
       public Empresa getEmpresa(int nif){
             return this.empresas.get(nif);
       }
       
       /**
-       * Dado o endereço de utilizador retorna o cliente se existir
+       * Dado o nif retorna o cliente se existir
        */
       public Cliente getCliente(int nif){
             return this.clientes.get(nif);
       }
       
       /**
-       * Registar uma nova Empresa
+       * Regista uma nova Empresa
        */
       public boolean registarEmpresa(Empresa novaEmpresa){
             if(!this.empresas.containsKey(novaEmpresa.getNif()) && !this.clientes.containsKey(novaEmpresa.getNif())) {
             		System.out.println("novaEmpresa: "+novaEmpresa);
                 this.empresas.put(novaEmpresa.getNif(),novaEmpresa);
-            }
-                else return false;
+            } else 
+                		return false;
             
             return false;
       }
         
       /**
-       * Registar um novo Cliente
+       * Regista um novo Cliente
        */
       public boolean registarCliente(Cliente novoCliente){
             if(!this.clientes.containsKey(novoCliente.getNif()) && !this.empresas.containsKey(novoCliente.getNif())) {
             	System.out.println("novoCliente: "+novoCliente);
                 this.clientes.put(novoCliente.getNif(),novoCliente);
-            }
-            else return false;
+            } else 
+            		return false;
             
             return false;
       }
       
-      /**
-       * Remover Empresa
-       */
-      public boolean removerEmpresa(Empresa nif){
-          return null != this.empresas.remove(nif.getNif());
-      }
-      
-      /**
-       * Remover Cliente
-       */
-      public boolean removerCliente(Cliente nif){
-          return null != this.clientes.remove(nif.getNif());
-      }
-      
-
       
       /** 
        * Converte para uma representação textual  
@@ -130,10 +116,10 @@ public class Model implements Serializable
     	  if(!(empresas==null)) 
         return this.empresas.containsKey(nif);
     	  else
-    	  {
+    	  	{
     		  this.empresas=new HashMap<Integer,Empresa>();
     		  return true;
-    	  }
+    	  	}
     		  
       }
       
@@ -145,10 +131,10 @@ public class Model implements Serializable
     	  if(!(clientes==null)) 
         return this.clientes.containsKey(nif);
     	  else
-    	  {
+    	  	{
     		  this.clientes=new HashMap<Integer,Cliente>();
     		  return true;
-    	  }
+    	  	}
     		  
       }
       

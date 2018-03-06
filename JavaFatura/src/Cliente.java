@@ -9,7 +9,7 @@ public class Cliente extends Contribuintes implements Serializable
 	//variaveis de instancia
     private int numeroAgregados;
     private int numeroFiscais;
-    private double coeficiente;
+    private int coeficiente;
    
     
     public List<Fatura> fatCliente;
@@ -19,13 +19,13 @@ public class Cliente extends Contribuintes implements Serializable
        super("",0,"","","");
        this.numeroAgregados=0;
        this.numeroFiscais=0;
-       this.coeficiente=0.0;
+       this.coeficiente=0;
        this.fatCliente = new ArrayList<Fatura>();
        this.fatClientePend = new ArrayList<Fatura>();
         
     }
     
-    public Cliente( String nome, int nif, String email, String morada,String password,int numeroAgregados, int numeroFiscais, double coeficiente){
+    public Cliente( String nome, int nif, String email, String morada,String password,int numeroAgregados, int numeroFiscais, int coeficiente){
          super(nome, nif, email, morada, password);
          this.numeroAgregados=numeroAgregados;
          this.numeroFiscais=numeroFiscais;
@@ -60,7 +60,7 @@ public class Cliente extends Contribuintes implements Serializable
         return this.fatClientePend.stream()
                             .collect(Collectors.toList());
     }
-    public double getCoeficiente(){
+    public int getCoeficiente(){
      return coeficiente;   
     }
     
@@ -72,7 +72,7 @@ public class Cliente extends Contribuintes implements Serializable
     public void setNumeroFiscais(int numeroFiscais){
       this.numeroFiscais=numeroFiscais;
     }
-    public void setCoeficiente(double coeficiente){
+    public void setCoeficiente(int coeficiente){
       this.coeficiente=coeficiente;
     }
     
@@ -94,6 +94,8 @@ public class Cliente extends Contribuintes implements Serializable
 	        s.append("NIF: " + super.getNif() + "\n");
 	        s.append("Email: " + super.getEmail() + "\n");
 	        s.append("Morada: " + super.getMorada() + "\n");
+	        s.append("Numero de pessoas do Agregado Familiar: " + numeroAgregados + "\n");
+	        s.append("Coeficiente: " + coeficiente + "\n");
             
         return s.toString(); 
     }

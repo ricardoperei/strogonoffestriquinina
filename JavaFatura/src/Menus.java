@@ -41,11 +41,13 @@ public class Menus {
 		System.out.println("\n0 - Sair");
 	
 	}
-	protected static void menuCliente1() {
+	protected static void menuClienteAltDados() {
 		System.out.println("Qual a informação que quer alterar");
 		System.out.println("1 - Nome");
-		System.out.println("2 - Morada");
-		System.out.println("VER NO ENUNCIADO QUAL A INFORMAÇÃO DE CADA ENTIDADE");
+		System.out.println("2 - Password");
+		System.out.println("3 - Morada");
+		System.out.println("4 - Agregado Familiar");
+		System.out.println("5 - Coeficiente");
 		System.out.println("0 - Voltar atrás");
 
 	}
@@ -104,8 +106,8 @@ public class Menus {
 		System.out.println("2 - Password");
 		System.out.println("3 - Morada");
 		System.out.println("0 - Voltar atrás");
-
 	}
+	
 	protected static void menuFatura() {
 		System.out.println("Emitir fatura");
 		System.out.println("Insira o nif");
